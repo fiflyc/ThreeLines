@@ -50,9 +50,14 @@ public class Board {
         public enum Type { RED, ORANGE, YELLOW }
 
         public final Type type;
+        private Field field;
 
         private Tile(Type type) {
             this.type = type;
+        }
+
+        public Field getField() {
+            return field;
         }
     }
 
@@ -143,12 +148,22 @@ public class Board {
         for (Tile.Type tileType: Tile.Type.class.getEnumConstants()) {
             int x = boardType.getTargetColumn(tileType);
             for (int y = 0; y < boardType.getHeight(); y++) {
-                if (fields.get(y).get(x).getState().equals(Field.State.FILLED)) {
-                    fields.get(y).get(x).setTile(tiles.get(tiles.size() - 1));
+                if (fields.get(y).get(x).state == Field.State.FILLED) {
+                    fields.get(y).get(x).tile = tiles.get(tiles.size() - 1);
+                    tiles.get(tiles.size() - 1).field = fields.get(y).get(x);
                     tiles.remove(tiles.size() - 1);
                 }
             }
         }
     }
 
+    public Field getStartPosition() {
+        return fields.get(0).get(0);
+    }
+
+    public void move(Tile tile, Field field) {
+        tile.field.tile = null;
+        tile.field = field;
+        field.tile = tile;
+    }
 }

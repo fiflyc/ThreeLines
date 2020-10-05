@@ -157,13 +157,37 @@ public class Board {
         }
     }
 
-    public Field getStartPosition() {
-        return fields.get(0).get(0);
+    public Field get(int x, int y) {
+        return fields.get(y).get(x);
     }
 
     public void move(Tile tile, Field field) {
         tile.field.tile = null;
+        tile.field.state = Field.State.EMPTY;
         tile.field = field;
         field.tile = tile;
+        field.state = Field.State.FILLED;
+    }
+
+    public boolean canMove(Tile tile, Field field) {
+        return
+                field != null && tile != null && (
+                        tile.getField().getLeft() == field ||
+                                tile.getField().getRight() == field ||
+                                tile.getField().getUp() == field ||
+                                tile.getField().getDown() == field
+                );
+    }
+
+    public boolean isEnd() {
+        for (var tileType: Tile.Type.values()) {
+            int x = type.getTargetColumn(tileType);
+            for (int y = 0; y < height; y++) {
+                if (fields.get(y).get(x).state == Field.State.FILLED  || fields.get(y).get(x).tile.type != tileType) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 }

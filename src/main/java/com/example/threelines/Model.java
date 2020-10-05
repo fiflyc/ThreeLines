@@ -12,16 +12,14 @@ public class Model {
     }
 
     private final View view;
-    private final Logic logic;
 
     private State state;
     private Board board;
     private Board.Tile selectedTile;
     private Board.Field selectedField;
 
-    public Model(View view, Logic logic) {
+    public Model(View view) {
         this.view = view;
-        this.logic = logic;
         state = State.START_MENU;
     }
 
@@ -51,12 +49,12 @@ public class Model {
             handleControlInSelectedTileState(control);
         } else if (state == State.GAME_SELECTED_DIRECTION) {
             if (control == Control.SPACE) {
-                if (logic.canMove(selectedTile, selectedField)) {
+                if (board.canMove(selectedTile, selectedField)) {
                     board.move(selectedTile, selectedField);
                     view.showBoard(board);
                     selectedTile = null;
 
-                    if (logic.isEnd(board)) {
+                    if (board.isEnd()) {
                         state = State.END_MENU;
                         view.showEndMenu();
                     }
@@ -137,7 +135,7 @@ public class Model {
     private void startNewGame(Board.Type boardType) {
         board = new Board(boardType);
         state = State.GAME;
-        selectedField = board.getStartPosition();
+        selectedField = board.get(0, 0);
         view.showBoard(board);
     }
 }

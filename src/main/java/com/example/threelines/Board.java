@@ -138,7 +138,7 @@ public class Board {
 
     private void initTiles(Type boardType, List<List<Field>> fields) {
         List<Tile> tiles = new ArrayList<>(boardType.getNumberOfTiles(null));
-        for (Tile.Type tileType: Tile.Type.class.getEnumConstants()) {
+        for (Tile.Type tileType: Tile.Type.values()) {
             for (int i = 0; i < boardType.getNumberOfTiles(tileType); i++) {
                 tiles.add(new Tile(tileType));
             }

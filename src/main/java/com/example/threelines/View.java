@@ -14,6 +14,8 @@ public interface View {
 
     void showBoard(Board board);
 
+    void moveTile(Board.Tile tile, Board.Field target);
+
     void selectTile(Board.Tile tile);
 
     void selectField(Board.Field field);

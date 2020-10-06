@@ -51,7 +51,7 @@ public class Model {
             if (control == Control.SPACE) {
                 if (board.canMove(selectedTile, selectedField)) {
                     board.move(selectedTile, selectedField);
-                    view.showBoard(board);
+                    view.moveTile(selectedTile, selectedField);
                     selectedTile = null;
 
                     if (board.isEnd()) {

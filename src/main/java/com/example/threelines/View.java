@@ -2,6 +2,8 @@ package com.example.threelines;
 
 public interface View {
 
+    void setController(Controller controller);
+
     void showStartMenu();
 
     void showEndMenu();

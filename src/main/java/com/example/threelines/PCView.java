@@ -245,6 +245,7 @@ public class PCView implements View {
         root.getChildren().addAll(group, vSpacer, hbox);
 
         Scene scene = new Scene(root);
+        scene.setFill(Color.WHITESMOKE);
         scene.setOnKeyPressed(event -> controller.pressedKey(event.getText()));
         stage.setScene(scene);
         stage.show();

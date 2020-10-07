@@ -18,7 +18,9 @@ public class PCController implements Controller {
         } else if (key.toLowerCase().equals("s")) {
             model.sendCommand(Control.DOWN);
         } else if (key.toLowerCase().equals("c")) {
-            model.sendCommand(Control.CHOOSE);
+            model.sendCommand(Control.SELECT);
+        } else if (key.toLowerCase().equals("e")) {
+            model.sendCommand(Control.UNSELECT);
         }
     }
 

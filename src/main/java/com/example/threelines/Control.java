@@ -1,7 +1,8 @@
 package com.example.threelines;
 
 public enum Control {
-    CHOOSE,
+    SELECT,
+    UNSELECT,
     LEFT,
     RIGHT,
     UP,

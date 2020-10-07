@@ -52,7 +52,7 @@ public class Model {
         } else if (state == State.GAME_SELECTED_TILE) {
             handleControlInSelectedTileState(control);
         } else if (state == State.GAME_SELECTED_DIRECTION) {
-            if (control == Control.CHOOSE) {
+            if (control == Control.SELECT) {
                 if (board.canMove(selectedTile, selectedField)) {
                     state = State.GAME;
                     board.move(selectedTile, selectedField);
@@ -73,7 +73,7 @@ public class Model {
 
     private void handleControlInGameState(Control control) {
         switch (control) {
-            case CHOOSE:
+            case SELECT:
                 if (selectedField.getTile() != null) {
                     state = State.GAME_SELECTED_TILE;
                     selectedTile = selectedField.getTile();
@@ -109,7 +109,8 @@ public class Model {
 
     private void handleControlInSelectedTileState(Control control) {
         switch (control) {
-            case CHOOSE:
+            case SELECT:
+            case UNSELECT:
                 state = State.GAME;
                 view.unselectTile(selectedTile);
                 selectedTile = null;
@@ -117,28 +118,27 @@ public class Model {
             case LEFT:
                 state = State.GAME_SELECTED_DIRECTION;
                 view.unselectField(selectedField);
-                selectedField = (canBeChosen(selectedTile.getField().getLeft()))? selectedTile.getField().getLeft() : selectedField;
+                selectedField = (canBeChosen(selectedTile.getField().getLeft())) ? selectedTile.getField().getLeft() : selectedField;
                 view.selectField(selectedField);
                 break;
             case RIGHT:
                 state = State.GAME_SELECTED_DIRECTION;
                 view.unselectField(selectedField);
-                selectedField = (canBeChosen(selectedTile.getField().getRight()))? selectedTile.getField().getRight() : selectedField;
+                selectedField = (canBeChosen(selectedTile.getField().getRight())) ? selectedTile.getField().getRight() : selectedField;
                 view.selectField(selectedField);
                 break;
             case UP:
                 state = State.GAME_SELECTED_DIRECTION;
                 view.unselectField(selectedField);
-                selectedField = (canBeChosen(selectedTile.getField().getUp()))? selectedTile.getField().getUp() : selectedField;
+                selectedField = (canBeChosen(selectedTile.getField().getUp())) ? selectedTile.getField().getUp() : selectedField;
                 view.selectField(selectedField);
                 break;
             case DOWN:
                 state = State.GAME_SELECTED_DIRECTION;
                 view.unselectField(selectedField);
-                selectedField = (canBeChosen(selectedTile.getField().getDown()))? selectedTile.getField().getDown() : selectedField;
+                selectedField = (canBeChosen(selectedTile.getField().getDown())) ? selectedTile.getField().getDown() : selectedField;
                 view.selectField(selectedField);
                 break;
-
         }
     }
 

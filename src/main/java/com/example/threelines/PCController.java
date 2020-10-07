@@ -2,25 +2,32 @@ package com.example.threelines;
 
 public class PCController implements Controller {
 
-    private Model model;
+    private final Model model;
 
     public PCController(Model model) {
         this.model = model;
     }
 
     public void pressedKey(String key) {
-        if (key.toLowerCase().equals("a")) {
-            model.sendCommand(Control.LEFT);
-        } else if (key.toLowerCase().equals("d")) {
-            model.sendCommand(Control.RIGHT);
-        } else if (key.toLowerCase().equals("w")) {
-            model.sendCommand(Control.UP);
-        } else if (key.toLowerCase().equals("s")) {
-            model.sendCommand(Control.DOWN);
-        } else if (key.toLowerCase().equals("c")) {
-            model.sendCommand(Control.SELECT);
-        } else if (key.toLowerCase().equals("e")) {
-            model.sendCommand(Control.UNSELECT);
+        switch (key.toLowerCase()) {
+            case "a":
+                model.sendCommand(Control.LEFT);
+                break;
+            case "d":
+                model.sendCommand(Control.RIGHT);
+                break;
+            case "w":
+                model.sendCommand(Control.UP);
+                break;
+            case "s":
+                model.sendCommand(Control.DOWN);
+                break;
+            case "c":
+                model.sendCommand(Control.SELECT);
+                break;
+            case "e":
+                model.sendCommand(Control.UNSELECT);
+                break;
         }
     }
 

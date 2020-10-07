@@ -185,11 +185,17 @@ public class Board {
         for (var tileType: Tile.Type.values()) {
             int x = type.getTargetColumn(tileType);
             for (int y = 0; y < height; y++) {
-                if (fields.get(y).get(x).tile != null  || fields.get(y).get(x).tile.type != tileType) {
+                if (!fieldFilledCorrectly(fields.get(y).get(x), tileType)) {
                     return false;
                 }
             }
         }
         return true;
+    }
+
+    private boolean fieldFilledCorrectly(Field field, Tile.Type targetType) {
+        return
+                field.state == Field.State.BLOCKED ||
+                field.state == Field.State.FILLED && field.getTile().type == targetType;
     }
 }

@@ -144,8 +144,9 @@ public class PCView implements View {
     }
 
     public void showEndMenu() {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Задача решена");
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Конец игры");
+        alert.setHeaderText("Задача решена");
         alert.getButtonTypes().clear();
         alert.getDialogPane().getScene().getWindow().setOnCloseRequest(event -> controller.onButtonPressed(Command.CONTINUE_GAME));
 
@@ -156,7 +157,7 @@ public class PCView implements View {
         Optional<ButtonType> option = alert.showAndWait();
 
         if (option.isEmpty()) {
-            controller.onButtonPressed(Command.EXIT);
+            controller.onButtonPressed(Command.CONTINUE_GAME);
         } else if (option.get() == newGame) {
             controller.onButtonPressed(Command.NEW_GAME);
         } else if (option.get() == exit) {

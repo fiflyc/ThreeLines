@@ -38,6 +38,7 @@ public class Model {
             case CONTINUE_GAME:
                 state = State.GAME;
                 view.showBoardWindow(board);
+                view.selectField(selectedField);
                 break;
         }
     }

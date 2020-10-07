@@ -185,7 +185,7 @@ public class Board {
         for (var tileType: Tile.Type.values()) {
             int x = type.getTargetColumn(tileType);
             for (int y = 0; y < height; y++) {
-                if (fields.get(y).get(x).state == Field.State.FILLED  || fields.get(y).get(x).tile.type != tileType) {
+                if (fields.get(y).get(x).tile != null  || fields.get(y).get(x).tile.type != tileType) {
                     return false;
                 }
             }

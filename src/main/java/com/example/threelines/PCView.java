@@ -192,7 +192,7 @@ public class PCView implements View {
 
     public void showBoardWindow(Board board) {
         stage.setResizable(false);
-        stage.setMinHeight(200 + 100 * board.height);
+        stage.setMinHeight(300 + 100 * board.height);
         stage.setMinWidth(100 + 100 * board.width);
 
         VBox root = new VBox();
@@ -228,17 +228,25 @@ public class PCView implements View {
     }
 
     private void showBoard(Board board, Group group) {
+        TileDrawer[] columnMarks = new TileDrawer[board.width];
+        for (var tileType: Board.Tile.Type.values()) {
+            int column = board.type.getTargetColumn(tileType);
+            columnMarks[column] = new TileDrawer(tileType, 100 + 100 * column, 75, 25);
+            columnMarks[column].changeColor(Color.GRAY);
+            columnMarks[column].draw(group);
+        }
+
         tileDrawers.clear();
         fieldDrawers.clear();
         for (int x = 0; x < board.width; x++) {
             for (int y = 0; y < board.height; y++) {
                 var field = board.get(x, y);
-                var fieldDrawer = new FieldDrawer(field.getState(), 100 + 100 * x, 100 + 100 * y, 46);
+                var fieldDrawer = new FieldDrawer(field.getState(), 100 + 100 * x, 200 + 100 * y, 46);
                 fieldDrawers.put(field, fieldDrawer);
 
                 if (field.getState() == Board.Field.State.FILLED) {
                     var tile = field.getTile();
-                    var tileDrawer = new TileDrawer(tile.type, 100 + 100 * x, 100 + 100 * y, 35);
+                    var tileDrawer = new TileDrawer(tile.type, 100 + 100 * x, 200 + 100 * y, 35);
                     tileDrawers.put(tile, tileDrawer);
                 }
             }

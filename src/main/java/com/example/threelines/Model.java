@@ -50,6 +50,7 @@ public class Model {
         } else if (state == State.GAME_SELECTED_DIRECTION) {
             if (control == Control.CHOOSE) {
                 if (board.canMove(selectedTile, selectedField)) {
+                    state = State.GAME;
                     board.move(selectedTile, selectedField);
                     view.moveTile(selectedTile, selectedField);
                     selectedTile = null;

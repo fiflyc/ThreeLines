@@ -171,11 +171,13 @@ public class Board {
 
     public boolean canMove(Tile tile, Field field) {
         return
-                field != null && tile != null && (
+                field != null &&
+                tile != null &&
+                field.state == Field.State.EMPTY && (
                         tile.getField().getLeft() == field ||
-                                tile.getField().getRight() == field ||
-                                tile.getField().getUp() == field ||
-                                tile.getField().getDown() == field
+                        tile.getField().getRight() == field ||
+                        tile.getField().getUp() == field ||
+                        tile.getField().getDown() == field
                 );
     }
 

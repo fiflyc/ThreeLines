@@ -9,7 +9,17 @@ public class PCController implements Controller {
     }
 
     public void pressedKey(String key) {
-        System.out.println("Our daddy told us do not been ashamed about our " + key);
+        if (key.toLowerCase().equals("a")) {
+            model.sendCommand(Control.LEFT);
+        } else if (key.toLowerCase().equals("d")) {
+            model.sendCommand(Control.RIGHT);
+        } else if (key.toLowerCase().equals("w")) {
+            model.sendCommand(Control.UP);
+        } else if (key.toLowerCase().equals("s")) {
+            model.sendCommand(Control.DOWN);
+        } else if (key.toLowerCase().equals("c")) {
+            model.sendCommand(Control.CHOOSE);
+        }
     }
 
     public void onButtonPressed(Command command) {

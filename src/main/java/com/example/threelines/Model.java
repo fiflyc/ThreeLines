@@ -48,7 +48,7 @@ public class Model {
         } else if (state == State.GAME_SELECTED_TILE) {
             handleControlInSelectedTileState(control);
         } else if (state == State.GAME_SELECTED_DIRECTION) {
-            if (control == Control.SPACE) {
+            if (control == Control.CHOOSE) {
                 if (board.canMove(selectedTile, selectedField)) {
                     board.move(selectedTile, selectedField);
                     view.moveTile(selectedTile, selectedField);
@@ -67,7 +67,7 @@ public class Model {
 
     private void handleControlInGameState(Control control) {
         switch (control) {
-            case SPACE:
+            case CHOOSE:
                 if (selectedField.getTile() != null) {
                     state = State.GAME_SELECTED_TILE;
                     selectedTile = selectedField.getTile();
@@ -76,30 +76,34 @@ public class Model {
                 break;
             case LEFT:
                 view.unselectField(selectedField);
-                selectedField = (selectedField.getLeft() != null)? selectedField.getLeft() : selectedField;
+                selectedField = (canBeChosen(selectedField.getLeft()))? selectedField.getLeft() : selectedField;
                 view.selectField(selectedField);
                 break;
             case RIGHT:
                 view.unselectField(selectedField);
-                selectedField = (selectedField.getRight() != null)? selectedField.getRight() : selectedField;
+                selectedField = (canBeChosen(selectedField.getRight()))? selectedField.getRight() : selectedField;
                 view.selectField(selectedField);
                 break;
             case UP:
                 view.unselectField(selectedField);
-                selectedField = (selectedField.getUp() != null)? selectedField.getUp() : selectedField;
+                selectedField = (canBeChosen(selectedField.getUp()))? selectedField.getUp() : selectedField;
                 view.selectField(selectedField);
                 break;
             case DOWN:
                 view.unselectField(selectedField);
-                selectedField = (selectedField.getDown() != null)? selectedField.getDown() : selectedField;
+                selectedField = (canBeChosen(selectedField.getDown()))? selectedField.getDown() : selectedField;
                 view.selectField(selectedField);
                 break;
         }
     }
 
+    private boolean canBeChosen(Board.Field field) {
+        return field != null && field.getState() != Board.Field.State.BLOCKED;
+    }
+
     private void handleControlInSelectedTileState(Control control) {
         switch (control) {
-            case SPACE:
+            case CHOOSE:
                 state = State.GAME;
                 view.unselectTile(selectedTile);
                 selectedTile = null;
@@ -137,5 +141,6 @@ public class Model {
         state = State.GAME;
         selectedField = board.get(0, 0);
         view.showBoard(board);
+        view.selectField(selectedField);
     }
 }

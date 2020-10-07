@@ -87,7 +87,7 @@ public class PCView implements View {
         public FieldDrawer(Board.Field.State state, double x, double y, double r) {
             shape = new Rectangle(x - r, y - r, 2 * r, 2 * r);
             if (state == Board.Field.State.BLOCKED) {
-                shape.setFill(Color.WHITE);
+                shape.setFill(Color.WHITESMOKE);
             } else {
                 shape.setFill(Color.GRAY);
             }
@@ -219,6 +219,7 @@ public class PCView implements View {
 
         HBox hbox = new HBox();
         Button newGame = new Button("Новая игра");
+        newGame.setFocusTraversable(false);
         newGame.setMinSize(150, 50);
         newGame.setOnAction(event -> controller.onButtonPressed(Command.NEW_GAME));
 
@@ -226,6 +227,7 @@ public class PCView implements View {
         hSpacer.setMinSize(100 * board.width - 300, 50);
 
         Button buttonExit = new Button("Выход");
+        buttonExit.setFocusTraversable(false);
         buttonExit.setMinSize(150, 50);
         buttonExit.setOnAction(event -> controller.onButtonPressed(Command.SOFT_EXIT));
 
@@ -239,22 +241,36 @@ public class PCView implements View {
     }
 
     public void moveTile(Board.Tile tile, Board.Field target) {
-
+        tileDrawers.get(tile).moveTo(fieldDrawers.get(target).x, fieldDrawers.get(target).y);
     }
 
     public void selectTile(Board.Tile tile) {
-
+        tileDrawers.get(tile).changeColor(Color.DARKSLATEGREY);
     }
 
     public void selectField(Board.Field field) {
-
+        fieldDrawers.get(field).changeColor(Color.PALEGREEN);
     }
 
     public void unselectTile(Board.Tile tile) {
-
+        switch (tile.type) {
+            case RED:
+                tileDrawers.get(tile).changeColor(Color.DARKRED);
+                break;
+            case ORANGE:
+                tileDrawers.get(tile).changeColor(Color.ORANGE);
+                break;
+            case YELLOW:
+                tileDrawers.get(tile).changeColor(Color.GOLD);
+                break;
+        }
     }
 
     public void unselectField(Board.Field field) {
-
+        if (field.getState() == Board.Field.State.BLOCKED) {
+            fieldDrawers.get(field).changeColor(Color.WHITESMOKE);
+        } else {
+            fieldDrawers.get(field).changeColor(Color.GRAY);
+        }
     }
 }

@@ -4,8 +4,7 @@ public class Model {
 
     private enum State {
         START_MENU,
-        END_MENU,
-        EXIT_MENU,
+        ALERT,
         GAME,
         GAME_SELECTED_TILE,
         GAME_SELECTED_DIRECTION
@@ -28,8 +27,12 @@ public class Model {
             case NEW_GAME:
                 startNewGame(Board.Type.CLASSIC);
                 break;
+            case SOFT_NEW_GAME:
+                state = State.ALERT;
+                view.showNewGameMenu();
+                break;
             case SOFT_EXIT:
-                state = State.EXIT_MENU;
+                state = State.ALERT;
                 view.showExitMenu();
                 break;
             case EXIT:
@@ -58,7 +61,7 @@ public class Model {
                     selectedTile = null;
 
                     if (board.isEnd()) {
-                        state = State.END_MENU;
+                        state = State.ALERT;
                         view.showEndMenu();
                     }
                 }

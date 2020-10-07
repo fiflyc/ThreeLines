@@ -187,6 +187,28 @@ public class PCView implements View {
         }
     }
 
+    public void showNewGameMenu() {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Новая игра");
+        alert.setHeaderText("Вы уверены, что хотите начать новую игру?");
+        alert.getButtonTypes().clear();
+        alert.getDialogPane().getScene().getWindow().setOnCloseRequest(event -> controller.onButtonPressed(Command.CONTINUE_GAME));
+
+        ButtonType continueGame = new ButtonType("Продолжить игру");
+        ButtonType newGame = new ButtonType("Новая игра");
+        alert.getButtonTypes().addAll(continueGame, newGame);
+
+        Optional<ButtonType> option = alert.showAndWait();
+
+        if (option.isEmpty()) {
+            controller.onButtonPressed(Command.CONTINUE_GAME);
+        } else if (option.get() == continueGame) {
+            controller.onButtonPressed(Command.CONTINUE_GAME);
+        } else if (option.get() == newGame) {
+            controller.onButtonPressed(Command.NEW_GAME);
+        }
+    }
+
     public void closeApplication() {
         Platform.exit();
     }
@@ -209,7 +231,7 @@ public class PCView implements View {
         Button newGame = new Button("Новая игра");
         newGame.setFocusTraversable(false);
         newGame.setMinSize(150, 50);
-        newGame.setOnAction(event -> controller.onButtonPressed(Command.NEW_GAME));
+        newGame.setOnAction(event -> controller.onButtonPressed(Command.SOFT_NEW_GAME));
 
         Pane hSpacer = new Pane();
         hSpacer.setMinSize(100 * board.width - 300, 50);

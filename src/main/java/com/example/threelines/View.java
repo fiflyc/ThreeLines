@@ -10,6 +10,8 @@ public interface View {
 
     void showExitMenu();
 
+    void showNewGameMenu();
+
     void closeApplication();
 
     void showBoardWindow(Board board);

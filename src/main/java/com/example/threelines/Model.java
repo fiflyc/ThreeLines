@@ -37,7 +37,7 @@ public class Model {
                 break;
             case CONTINUE_GAME:
                 state = State.GAME;
-                view.showBoard(board);
+                view.showBoardWindow(board);
                 break;
         }
     }
@@ -142,7 +142,7 @@ public class Model {
         board = new Board(boardType);
         state = State.GAME;
         selectedField = board.get(0, 0);
-        view.showBoard(board);
+        view.showBoardWindow(board);
         view.selectField(selectedField);
     }
 }

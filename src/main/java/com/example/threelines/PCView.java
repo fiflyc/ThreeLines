@@ -190,7 +190,7 @@ public class PCView implements View {
         Platform.exit();
     }
 
-    public void showBoard(Board board) {
+    public void showBoardWindow(Board board) {
         stage.setResizable(false);
         stage.setMinHeight(200 + 100 * board.height);
         stage.setMinWidth(100 + 100 * board.width);
@@ -199,27 +199,7 @@ public class PCView implements View {
         root.setPadding(new Insets(50, 50, 50, 50));
         Group group = new Group();
 
-        tileDrawers.clear();
-        fieldDrawers.clear();
-        for (int x = 0; x < board.width; x++) {
-            for (int y = 0; y < board.height; y++) {
-                var field = board.get(x, y);
-                var fieldDrawer = new FieldDrawer(field.getState(), 100 + 100 * x, 100 + 100 * y, 46);
-                fieldDrawers.put(field, fieldDrawer);
-
-                if (field.getState() == Board.Field.State.FILLED) {
-                    var tile = field.getTile();
-                    var tileDrawer = new TileDrawer(tile.type, 100 + 100 * x, 100 + 100 * y, 35);
-                    tileDrawers.put(tile, tileDrawer);
-                }
-            }
-        }
-        for (var drawer: fieldDrawers.values()) {
-            drawer.draw(group);
-        }
-        for (var drawer: tileDrawers.values()) {
-            drawer.draw(group);
-        }
+        showBoard(board, group);
 
         Pane vSpacer = new Pane();
         vSpacer.setMinSize(100, 50);
@@ -245,6 +225,30 @@ public class PCView implements View {
         scene.setOnKeyPressed(event -> controller.pressedKey(event.getText()));
         stage.setScene(scene);
         stage.show();
+    }
+
+    private void showBoard(Board board, Group group) {
+        tileDrawers.clear();
+        fieldDrawers.clear();
+        for (int x = 0; x < board.width; x++) {
+            for (int y = 0; y < board.height; y++) {
+                var field = board.get(x, y);
+                var fieldDrawer = new FieldDrawer(field.getState(), 100 + 100 * x, 100 + 100 * y, 46);
+                fieldDrawers.put(field, fieldDrawer);
+
+                if (field.getState() == Board.Field.State.FILLED) {
+                    var tile = field.getTile();
+                    var tileDrawer = new TileDrawer(tile.type, 100 + 100 * x, 100 + 100 * y, 35);
+                    tileDrawers.put(tile, tileDrawer);
+                }
+            }
+        }
+        for (var drawer: fieldDrawers.values()) {
+            drawer.draw(group);
+        }
+        for (var drawer: tileDrawers.values()) {
+            drawer.draw(group);
+        }
     }
 
     public void moveTile(Board.Tile tile, Board.Field target) {

@@ -12,7 +12,7 @@ public interface View {
 
     void closeApplication();
 
-    void showBoard(Board board);
+    void showBoardWindow(Board board);
 
     void moveTile(Board.Tile tile, Board.Field target);
 

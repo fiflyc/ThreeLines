@@ -56,8 +56,8 @@ public class PCView implements View {
 
         public void moveTo(double x, double y) {
             if (shape instanceof Rectangle) {
-                ((Rectangle) shape).setX(x - ((Rectangle) shape).getWidth());
-                ((Rectangle) shape).setY(y - ((Rectangle) shape).getHeight());
+                ((Rectangle) shape).setX(x - ((Rectangle) shape).getWidth() / 2);
+                ((Rectangle) shape).setY(y - ((Rectangle) shape).getHeight() / 2);
             } else if (shape instanceof Circle) {
                 ((Circle) shape).setCenterX(x);
                 ((Circle) shape).setCenterY(y);
@@ -80,11 +80,14 @@ public class PCView implements View {
 
     private static class FieldDrawer {
 
-        private double x;
-        private double y;
-        private Rectangle shape;
+        private final double x;
+        private final double y;
+        private final Rectangle shape;
 
         public FieldDrawer(Board.Field.State state, double x, double y, double r) {
+            this.x = x;
+            this.y = y;
+
             shape = new Rectangle(x - r, y - r, 2 * r, 2 * r);
             if (state == Board.Field.State.BLOCKED) {
                 shape.setFill(Color.WHITESMOKE);
@@ -203,15 +206,19 @@ public class PCView implements View {
                 var field = board.get(x, y);
                 var fieldDrawer = new FieldDrawer(field.getState(), 100 + 100 * x, 100 + 100 * y, 46);
                 fieldDrawers.put(field, fieldDrawer);
-                fieldDrawer.draw(group);
 
                 if (field.getState() == Board.Field.State.FILLED) {
                     var tile = field.getTile();
                     var tileDrawer = new TileDrawer(tile.type, 100 + 100 * x, 100 + 100 * y, 35);
                     tileDrawers.put(tile, tileDrawer);
-                    tileDrawer.draw(group);
                 }
             }
+        }
+        for (var drawer: fieldDrawers.values()) {
+            drawer.draw(group);
+        }
+        for (var drawer: tileDrawers.values()) {
+            drawer.draw(group);
         }
 
         Pane vSpacer = new Pane();

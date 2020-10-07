@@ -53,6 +53,7 @@ public class Model {
                     state = State.GAME;
                     board.move(selectedTile, selectedField);
                     view.moveTile(selectedTile, selectedField);
+                    view.unselectTile(selectedTile);
                     selectedTile = null;
 
                     if (board.isEnd()) {
@@ -112,25 +113,25 @@ public class Model {
             case LEFT:
                 state = State.GAME_SELECTED_DIRECTION;
                 view.unselectField(selectedField);
-                selectedField = (selectedTile.getField().getLeft() != null)? selectedTile.getField().getLeft() : selectedField;
+                selectedField = (canBeChosen(selectedTile.getField().getLeft()))? selectedTile.getField().getLeft() : selectedField;
                 view.selectField(selectedField);
                 break;
             case RIGHT:
                 state = State.GAME_SELECTED_DIRECTION;
                 view.unselectField(selectedField);
-                selectedField = (selectedTile.getField().getRight() != null)? selectedTile.getField().getRight() : selectedField;
+                selectedField = (canBeChosen(selectedTile.getField().getRight()))? selectedTile.getField().getRight() : selectedField;
                 view.selectField(selectedField);
                 break;
             case UP:
                 state = State.GAME_SELECTED_DIRECTION;
                 view.unselectField(selectedField);
-                selectedField = (selectedTile.getField().getUp() != null)? selectedTile.getField().getUp() : selectedField;
+                selectedField = (canBeChosen(selectedTile.getField().getUp()))? selectedTile.getField().getUp() : selectedField;
                 view.selectField(selectedField);
                 break;
             case DOWN:
                 state = State.GAME_SELECTED_DIRECTION;
                 view.unselectField(selectedField);
-                selectedField = (selectedTile.getField().getDown() != null)? selectedTile.getField().getDown() : selectedField;
+                selectedField = (canBeChosen(selectedTile.getField().getDown()))? selectedTile.getField().getDown() : selectedField;
                 view.selectField(selectedField);
                 break;
 
